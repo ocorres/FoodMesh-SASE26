@@ -24,8 +24,29 @@ create table if not exists public.donations (
   donation jsonb not null,
   matches jsonb not null default '[]'::jsonb,
   intake_mode text not null check (intake_mode in ('ai', 'demo')),
+  route_status text not null default 'pending'
+    check (route_status in ('pending', 'accepted', 'unmatched')),
+  current_match_index integer not null default 0,
+  accepted_by text,
+  impact_servings integer,
+  updated_at timestamptz not null default now(),
   created_at timestamptz not null default now()
 );
+
+alter table public.donations
+  add column if not exists route_status text not null default 'pending';
+
+alter table public.donations
+  add column if not exists current_match_index integer not null default 0;
+
+alter table public.donations
+  add column if not exists accepted_by text;
+
+alter table public.donations
+  add column if not exists impact_servings integer;
+
+alter table public.donations
+  add column if not exists updated_at timestamptz not null default now();
 
 alter table public.organizations enable row level security;
 alter table public.donations enable row level security;
@@ -49,6 +70,14 @@ create policy "demo donations insertable"
 on public.donations
 for insert
 to anon
+with check (true);
+
+drop policy if exists "demo donations updateable" on public.donations;
+create policy "demo donations updateable"
+on public.donations
+for update
+to anon
+using (true)
 with check (true);
 
 insert into public.organizations (
