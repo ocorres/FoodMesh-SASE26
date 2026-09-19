@@ -173,12 +173,18 @@ h2 { line-height: 1.15; }
 
 label { display: block; font-weight: 800; margin: 1rem 0 .4rem; }
 
-input, textarea {
+input, textarea, select {
   width: 100%;
   border: 1px solid #9da8a8;
   background: white;
   color: var(--text);
   padding: .85rem 1rem;
+}
+
+select {
+  border: 1px solid #9da8a8;
+  background: white;
+  color: var(--text);
 }
 
 .form-card { max-width: 720px; }
