@@ -206,6 +206,13 @@ export async function POST(request: Request) {
   } else {
     try {
       donation = await parseWithOpenAI(description, deadline);
+      donation = {
+        ...donation,
+        labelDate: labelDate || donation.labelDate || null,
+        labelDateType: labelDate ? labelDateType : donation.labelDateType || "unknown",
+        labelDateSource: labelDate ? "manual" : donation.labelDateSource || "unknown",
+        dateNeedsConfirmation: labelDate ? false : donation.dateNeedsConfirmation ?? false
+      };
       mode = "ai";
     } catch (error) {
       donation = fallbackParse(description, deadline, labelDate, labelDateType);
