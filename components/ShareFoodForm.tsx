@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import type { DonationIntake, RecipientMatch } from "@/lib/food";
 
 type IntakeResponse = {
@@ -8,6 +8,20 @@ type IntakeResponse = {
   matches: RecipientMatch[];
   mode: "ai" | "demo";
   note?: string;
+  persistence: {
+    persisted: boolean;
+    storage: "supabase" | "demo";
+    id?: string;
+    note?: string;
+  };
+};
+
+type RecentDonation = {
+  id: string;
+  donation: DonationIntake;
+  matches: RecipientMatch[];
+  intake_mode: "ai" | "demo";
+  created_at: string;
 };
 
 function labelValue(value: string) {
@@ -22,6 +36,22 @@ export default function ShareFoodForm() {
   const [result, setResult] = useState<IntakeResponse | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [recentDonations, setRecentDonations] = useState<RecentDonation[]>([]);
+
+  async function loadRecentDonations() {
+    try {
+      const response = await fetch("/api/donations", { cache: "no-store" });
+      if (!response.ok) return;
+      const data = await response.json();
+      setRecentDonations(Array.isArray(data.donations) ? data.donations : []);
+    } catch {
+      // Persistence is optional; the intake flow remains usable without it.
+    }
+  }
+
+  useEffect(() => {
+    void loadRecentDonations();
+  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,6 +73,9 @@ export default function ShareFoodForm() {
       }
 
       setResult(data);
+      if (data.persistence?.persisted) {
+        void loadRecentDonations();
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to analyze the donation.");
     } finally {
@@ -135,6 +168,12 @@ export default function ShareFoodForm() {
           </div>
 
           {result.note && <p className="notice">{result.note}</p>}
+
+          <p className={result.persistence.persisted ? "storage-status saved" : "storage-status"}>
+            {result.persistence.persisted
+              ? "Saved to Supabase · this routing record will survive refresh."
+              : result.persistence.note || "Temporary demo record · Supabase is not configured yet."}
+          </p>
 
           <dl className="detail-grid">
             <div>
@@ -241,6 +280,36 @@ export default function ShareFoodForm() {
             guarantees. Donors and recipient organizations remain responsible for following
             applicable food handling requirements.
           </p>
+        </section>
+      )}
+
+      {recentDonations.length > 0 && (
+        <section className="recent-donations" aria-labelledby="recent-donations-title">
+          <div className="section-heading">
+            <div>
+              <p className="kicker">Persisted demo data</p>
+              <h2 id="recent-donations-title">Recent routed donations</h2>
+            </div>
+          </div>
+          <div className="recent-donation-list">
+            {recentDonations.map((item) => (
+              <article className="recent-donation-card" key={item.id}>
+                <div>
+                  <h3>{item.donation.foodName}</h3>
+                  <p>
+                    {item.donation.quantityText} · {labelValue(item.donation.category)}
+                  </p>
+                  <p className="field-help">
+                    {new Date(item.created_at).toLocaleString()}
+                  </p>
+                </div>
+                <div className="recent-route">
+                  <strong>{item.matches[0]?.name || "No eligible recipient"}</strong>
+                  <span>{item.matches[0] ? `${item.matches[0].score}/100 match` : "Review needed"}</span>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
       )}
     </>
