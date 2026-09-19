@@ -403,3 +403,70 @@ select {
     margin-bottom: .75rem;
   }
 }
+
+
+.storage-status {
+  margin: 1rem 0;
+  padding: .75rem .9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--muted);
+  background: rgba(255,253,249,.7);
+}
+
+.storage-status.saved {
+  color: var(--text);
+  background: rgba(79,143,135,.1);
+  border-color: rgba(79,143,135,.3);
+}
+
+.recent-donations {
+  margin-top: 2rem;
+}
+
+.recent-donation-list {
+  display: grid;
+  gap: .75rem;
+}
+
+.recent-donation-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.recent-donation-card h3 {
+  margin: 0 0 .25rem;
+}
+
+.recent-donation-card p {
+  margin: .15rem 0;
+}
+
+.recent-route {
+  display: grid;
+  justify-items: end;
+  gap: .2rem;
+  text-align: right;
+}
+
+.recent-route span {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+@media (max-width: 650px) {
+  .recent-donation-card {
+    display: grid;
+  }
+
+  .recent-route {
+    justify-items: start;
+    text-align: left;
+  }
+}
