@@ -251,3 +251,69 @@ select {
   .result-heading { flex-direction: column; }
   .detail-grid { grid-template-columns: 1fr; }
 }
+
+
+.match-score {
+  display: inline-flex;
+  margin: .35rem 0 .7rem;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  background: rgba(79,143,135,.14);
+  color: var(--primary-dark);
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .5rem;
+}
+
+.score-grid > div {
+  padding: .65rem;
+  border-radius: 10px;
+  background: rgba(255,253,249,.75);
+}
+
+.score-grid dt {
+  color: var(--muted);
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.score-grid dd {
+  margin: .15rem 0 0;
+  font-weight: 800;
+}
+
+.alternatives {
+  margin-top: 1.5rem;
+}
+
+.alternative-grid {
+  display: grid;
+  gap: .7rem;
+}
+
+.alternative-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.alternative-card h4 {
+  margin: 0 0 .2rem;
+}
+
+.alternative-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .score-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
