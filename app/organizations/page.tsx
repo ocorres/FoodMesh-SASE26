@@ -1,4 +1,5 @@
 import Link from "next/link";
+import OrganizationWorkflow from "@/components/OrganizationWorkflow";
 
 export default function OrganizationsPage() {
   return (
@@ -21,10 +22,12 @@ export default function OrganizationsPage() {
         <article className="action-card">
           <p className="eyebrow">I serve my community</p>
           <h2>Receiving organization</h2>
-          <p>Publish needs, accessibility information, hours, and receiving capacity.</p>
-          <button className="button secondary" type="button">Partner onboarding coming next</button>
+          <p>Review routed donations, accept what fits, or decline so FoodMesh can reroute automatically.</p>
+          <a className="button secondary" href="#routing-title">Open routing queue</a>
         </article>
       </div>
+
+      <OrganizationWorkflow />
     </main>
   );
 }
