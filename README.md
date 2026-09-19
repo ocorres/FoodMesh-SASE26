@@ -10,6 +10,8 @@ FoodMesh is a hyperlocal food resilience web app that helps route surplus food f
 - Accessibility-aware recipient matching
 - Printable local food schedules
 - Bulk donation path for businesses and organizations
+- Package-date capture that preserves whether a label says best by, use by, sell by, expiration, or prepared on
+- Future photo AI can prefill those same date fields, with user review before submission
 
 ## Design principles
 
