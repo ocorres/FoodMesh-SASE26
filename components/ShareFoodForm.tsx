@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import type { DonationIntake, RecipientMatch } from "@/lib/food";
 
 type IntakeResponse = {
@@ -37,6 +37,7 @@ export default function ShareFoodForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [recentDonations, setRecentDonations] = useState<RecentDonation[]>([]);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
 
   async function loadRecentDonations() {
     try {
@@ -52,6 +53,12 @@ export default function ShareFoodForm() {
   useEffect(() => {
     void loadRecentDonations();
   }, []);
+
+  useEffect(() => {
+    if (result) {
+      resultHeadingRef.current?.focus();
+    }
+  }, [result]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -87,7 +94,7 @@ export default function ShareFoodForm() {
 
   return (
     <>
-      <form className="form-card" onSubmit={submit}>
+      <form className="form-card" onSubmit={submit} aria-busy={loading}>
         <label htmlFor="description">Describe the food</label>
         <p className="field-help" id="description-help">
           Write naturally. Example: “We have 40 boxed sandwiches and fruit from a hotel conference.
@@ -160,7 +167,9 @@ export default function ShareFoodForm() {
           <div className="result-heading">
             <div>
               <p className="kicker">Donation interpreted</p>
-              <h2 id="analysis-title">{result.donation.foodName}</h2>
+              <h2 id="analysis-title" ref={resultHeadingRef} tabIndex={-1}>
+                {result.donation.foodName}
+              </h2>
             </div>
             <span className={result.mode === "ai" ? "mode-badge ai" : "mode-badge"}>
               {result.mode === "ai" ? "AI analyzed" : "Demo parser"}
@@ -169,7 +178,10 @@ export default function ShareFoodForm() {
 
           {result.note && <p className="notice">{result.note}</p>}
 
-          <p className={result.persistence.persisted ? "storage-status saved" : "storage-status"}>
+          <p
+            className={result.persistence.persisted ? "storage-status saved" : "storage-status"}
+            role="status"
+          >
             {result.persistence.persisted
               ? "Saved to Supabase · this routing record will survive refresh."
               : result.persistence.note || "Temporary demo record · Supabase is not configured yet."}
