@@ -179,6 +179,9 @@ export default function ShareFoodForm() {
             <article className="best-match">
               <p className="eyebrow">Recommended recipient</p>
               <h3>{bestMatch.name}</h3>
+              <p className="match-score">
+                <strong>{bestMatch.score}/100 match</strong>
+              </p>
               <p>
                 <strong>{bestMatch.distanceMiles.toFixed(1)} miles away</strong> ·{" "}
                 {bestMatch.receivingWindow}
@@ -190,6 +193,16 @@ export default function ShareFoodForm() {
                   <li key={reason}>{reason}</li>
                 ))}
               </ul>
+
+              <h4>Score breakdown</h4>
+              <dl className="score-grid">
+                {Object.entries(bestMatch.scoreBreakdown).map(([key, value]) => (
+                  <div key={key}>
+                    <dt>{labelValue(key)}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
 
               <h4>Accessibility</h4>
               <ul>
@@ -203,6 +216,23 @@ export default function ShareFoodForm() {
               No safe demo match met the current routing constraints. The next version will offer a
               fallback community-resource route.
             </p>
+          )}
+
+          {result.matches.length > 1 && (
+            <section className="alternatives" aria-labelledby="alternatives-title">
+              <h3 id="alternatives-title">Other eligible recipients</h3>
+              <div className="alternative-grid">
+                {result.matches.slice(1, 3).map((match) => (
+                  <article className="alternative-card" key={match.id}>
+                    <div>
+                      <h4>{match.name}</h4>
+                      <p>{match.distanceMiles.toFixed(1)} miles · {match.receivingWindow}</p>
+                    </div>
+                    <strong>{match.score}/100</strong>
+                  </article>
+                ))}
+              </div>
+            </section>
           )}
 
           <p className="safety-note">
