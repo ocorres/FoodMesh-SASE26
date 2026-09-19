@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { DonationIntake, FoodCategory } from "@/lib/food";
+import type { DateLabelType, DonationIntake, FoodCategory } from "@/lib/food";
 import { matchRecipients } from "@/lib/matching";
 
 const categories: FoodCategory[] = [
@@ -14,7 +14,12 @@ const categories: FoodCategory[] = [
   "other"
 ];
 
-function fallbackParse(description: string, deadline: string): DonationIntake {
+function fallbackParse(
+  description: string,
+  deadline: string,
+  labelDate: string,
+  labelDateType: DateLabelType
+): DonationIntake {
   const text = `${description} ${deadline}`.toLowerCase();
 
   let category: FoodCategory = "other";
@@ -56,7 +61,11 @@ function fallbackParse(description: string, deadline: string): DonationIntake {
     dietaryNotes: [],
     allergenNotes: [],
     pickupSummary: deadline.trim() || "Pickup timing not specified",
-    confidence: "low"
+    confidence: "low",
+    labelDate: labelDate || null,
+    labelDateType,
+    labelDateSource: labelDate ? "manual" : "unknown",
+    dateNeedsConfirmation: false
   };
 }
 
@@ -142,6 +151,19 @@ export async function POST(request: Request) {
   const body = await request.json();
   const description = typeof body.description === "string" ? body.description.trim() : "";
   const deadline = typeof body.deadline === "string" ? body.deadline.trim() : "";
+  const labelDate = typeof body.labelDate === "string" ? body.labelDate.trim() : "";
+  const allowedDateTypes: DateLabelType[] = [
+    "best_by",
+    "use_by",
+    "sell_by",
+    "expiration",
+    "prepared_on",
+    "unknown"
+  ];
+  const labelDateType: DateLabelType =
+    typeof body.labelDateType === "string" && allowedDateTypes.includes(body.labelDateType as DateLabelType)
+      ? (body.labelDateType as DateLabelType)
+      : "unknown";
 
   if (description.length < 4) {
     return NextResponse.json(
@@ -155,7 +177,7 @@ export async function POST(request: Request) {
   let note: string | undefined;
 
   if (!process.env.OPENAI_API_KEY) {
-    donation = fallbackParse(description, deadline);
+    donation = fallbackParse(description, deadline, labelDate, labelDateType);
     mode = "demo";
     note = "Demo parser active. Add an OpenAI API key to enable live AI analysis.";
   } else {
@@ -163,7 +185,7 @@ export async function POST(request: Request) {
       donation = await parseWithOpenAI(description, deadline);
       mode = "ai";
     } catch (error) {
-      donation = fallbackParse(description, deadline);
+      donation = fallbackParse(description, deadline, labelDate, labelDateType);
       mode = "demo";
       note = "AI analysis was temporarily unavailable, so FoodMesh used its local fallback parser.";
       console.warn("OpenAI intake fallback:", error instanceof Error ? error.message : error);
