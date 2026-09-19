@@ -154,15 +154,20 @@ export async function POST(request: Request) {
   let mode: "ai" | "demo";
   let note: string | undefined;
 
-  try {
-    donation = await parseWithOpenAI(description, deadline);
-    mode = "ai";
-  } catch (error) {
+  if (!process.env.OPENAI_API_KEY) {
     donation = fallbackParse(description, deadline);
     mode = "demo";
-    note =
-      "Demo parser used because the AI service is not configured or was temporarily unavailable.";
-    console.warn(error);
+    note = "Demo parser active. Add an OpenAI API key to enable live AI analysis.";
+  } else {
+    try {
+      donation = await parseWithOpenAI(description, deadline);
+      mode = "ai";
+    } catch (error) {
+      donation = fallbackParse(description, deadline);
+      mode = "demo";
+      note = "AI analysis was temporarily unavailable, so FoodMesh used its local fallback parser.";
+      console.warn("OpenAI intake fallback:", error instanceof Error ? error.message : error);
+    }
   }
 
   const matches = matchRecipients(donation);
