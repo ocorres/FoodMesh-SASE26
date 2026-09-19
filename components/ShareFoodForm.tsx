@@ -17,6 +17,8 @@ function labelValue(value: string) {
 export default function ShareFoodForm() {
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [labelDate, setLabelDate] = useState("");
+  const [labelDateType, setLabelDateType] = useState("unknown");
   const [result, setResult] = useState<IntakeResponse | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,7 +33,7 @@ export default function ShareFoodForm() {
       const response = await fetch("/api/intake", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description, deadline })
+        body: JSON.stringify({ description, deadline, labelDate, labelDateType })
       });
 
       const data = await response.json();
@@ -78,6 +80,35 @@ export default function ShareFoodForm() {
           value={deadline}
           onChange={(event) => setDeadline(event.target.value)}
           placeholder="Example: Tonight by 9 PM"
+        />
+
+        <label htmlFor="label-date-type">Date printed on the food, if present</label>
+        <p className="field-help" id="label-date-help">
+          Choose the wording printed on the package. “Best by,” “sell by,” and “use by” do not all
+          mean the same thing, so FoodMesh keeps the original label type.
+        </p>
+        <select
+          id="label-date-type"
+          name="labelDateType"
+          aria-describedby="label-date-help"
+          value={labelDateType}
+          onChange={(event) => setLabelDateType(event.target.value)}
+        >
+          <option value="unknown">No date / not sure</option>
+          <option value="best_by">Best by</option>
+          <option value="use_by">Use by</option>
+          <option value="sell_by">Sell by</option>
+          <option value="expiration">Expiration</option>
+          <option value="prepared_on">Prepared on</option>
+        </select>
+
+        <label htmlFor="label-date">Printed date</label>
+        <input
+          id="label-date"
+          name="labelDate"
+          type="date"
+          value={labelDate}
+          onChange={(event) => setLabelDate(event.target.value)}
         />
 
         <button className="button" type="submit" disabled={loading}>
@@ -130,6 +161,18 @@ export default function ShareFoodForm() {
               <dt>Confidence</dt>
               <dd>{labelValue(result.donation.confidence)}</dd>
             </div>
+            <div>
+              <dt>Package date</dt>
+              <dd>
+                {result.donation.labelDate
+                  ? `${labelValue(result.donation.labelDateType || "unknown")}: ${result.donation.labelDate}`
+                  : "No printed date provided"}
+              </dd>
+            </div>
+            <div>
+              <dt>Date source</dt>
+              <dd>{labelValue(result.donation.labelDateSource || "unknown")}</dd>
+            </div>
           </dl>
 
           {bestMatch ? (
@@ -163,8 +206,10 @@ export default function ShareFoodForm() {
           )}
 
           <p className="safety-note">
-            FoodMesh does not use AI to make food-safety guarantees. Donors and recipient
-            organizations remain responsible for following applicable food handling requirements.
+            FoodMesh preserves the date wording printed on the food rather than treating every
+            package date as a safety expiration. FoodMesh does not use AI to make food-safety
+            guarantees. Donors and recipient organizations remain responsible for following
+            applicable food handling requirements.
           </p>
         </section>
       )}
