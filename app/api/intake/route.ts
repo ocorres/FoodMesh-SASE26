@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { DateLabelType, DonationIntake, FoodCategory } from "@/lib/food";
 import { matchRecipients } from "@/lib/matching";
+import { persistDonation } from "@/lib/persistence";
 
 const categories: FoodCategory[] = [
   "prepared_meal",
@@ -223,11 +224,13 @@ export async function POST(request: Request) {
   }
 
   const matches = matchRecipients(donation);
+  const persistence = await persistDonation(donation, matches, mode);
 
   return NextResponse.json({
     donation,
     matches,
     mode,
-    note
+    note,
+    persistence
   });
 }
