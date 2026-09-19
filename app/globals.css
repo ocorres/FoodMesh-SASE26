@@ -470,3 +470,104 @@ select {
     text-align: left;
   }
 }
+
+
+.organization-workflow {
+  margin-top: 2.25rem;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.impact-grid article {
+  display: grid;
+  gap: .2rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.impact-grid strong {
+  font-size: 1.8rem;
+}
+
+.impact-grid span {
+  color: var(--muted);
+}
+
+.routing-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.routing-card {
+  padding: 1.15rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.routing-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.routing-card-head h3 {
+  margin: .1rem 0 .3rem;
+}
+
+.route-badge {
+  flex: 0 0 auto;
+  padding: .3rem .65rem;
+  border-radius: 999px;
+  background: rgba(242,184,128,.18);
+  font-weight: 800;
+  font-size: .86rem;
+}
+
+.route-badge.accepted {
+  background: rgba(79,143,135,.16);
+}
+
+.route-target {
+  display: grid;
+  gap: .15rem;
+  margin: 1rem 0;
+  padding: .85rem 1rem;
+  border-radius: 12px;
+  background: rgba(122,166,194,.1);
+}
+
+.route-target span {
+  color: var(--muted);
+}
+
+.routing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin-top: 1rem;
+}
+
+.impact-line {
+  margin: 1rem 0 0;
+  padding-top: .9rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 650px) {
+  .impact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .routing-card-head {
+    display: grid;
+  }
+}
