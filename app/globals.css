@@ -617,3 +617,14 @@ select {
     width: 100%;
   }
 }
+
+
+@media (max-width: 480px) {
+  .score-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shell {
+    width: min(1120px, calc(100% - 1rem));
+  }
+}
