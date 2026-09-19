@@ -9,6 +9,9 @@ export type FoodCategory =
   | "mixed"
   | "other";
 
+export type DateLabelType = "best_by" | "use_by" | "sell_by" | "expiration" | "prepared_on" | "unknown";
+export type DateSource = "manual" | "text_ai" | "photo_ai" | "unknown";
+
 export type DonationIntake = {
   foodName: string;
   category: FoodCategory;
@@ -20,6 +23,10 @@ export type DonationIntake = {
   allergenNotes: string[];
   pickupSummary: string;
   confidence: "low" | "medium" | "high";
+  labelDate?: string | null;
+  labelDateType?: DateLabelType;
+  labelDateSource?: DateSource;
+  dateNeedsConfirmation?: boolean;
 };
 
 export type RecipientMatch = {
