@@ -138,10 +138,33 @@ async function parseWithOpenAI(description: string, deadline: string): Promise<D
   }
 
   const payload = await response.json();
-  const outputText = payload.output_text;
 
-  if (!outputText) {
-    throw new Error("OpenAI returned no structured output");
+  const outputText =
+    typeof payload.output_text === "string" && payload.output_text.trim()
+      ? payload.output_text
+      : Array.isArray(payload.output)
+        ? payload.output
+            .flatMap((item: { content?: unknown[] }) =>
+              Array.isArray(item?.content) ? item.content : []
+            )
+            .find(
+              (content: unknown) =>
+                typeof content === "object" &&
+                content !== null &&
+                "type" in content &&
+                (content as { type?: string }).type === "output_text" &&
+                "text" in content &&
+                typeof (content as { text?: unknown }).text === "string"
+            )?.text
+        : undefined;
+
+  if (typeof outputText !== "string" || !outputText.trim()) {
+    const status = typeof payload.status === "string" ? payload.status : "unknown";
+    const reason =
+      payload.incomplete_details && typeof payload.incomplete_details.reason === "string"
+        ? ` (${payload.incomplete_details.reason})`
+        : "";
+    throw new Error(`OpenAI returned no structured output; status=${status}${reason}`);
   }
 
   return JSON.parse(outputText) as DonationIntake;
