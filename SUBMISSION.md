@@ -1,6 +1,4 @@
-# FoodMesh Submission Working Draft
-
-This file is a working draft for the hackathon submission. Replace placeholders before final submission.
+# FoodMesh Submission Package
 
 ## One-line description
 
@@ -95,14 +93,21 @@ FoodMesh helps communities move usable food faster, with less friction and more 
 - Demo video: TODO
 - Pitch slides: TODO
 
-## Remaining verification before submission
+## Verified before submission
 
-- Complete accessibility audit
-- Build impact dashboard
-- Run production build
-- Repeat full happy path
-- Verify fallback behavior with OpenAI unavailable
-- Confirm no secrets are committed
+- Accessibility keyboard and zoom audit passed
+- Impact dashboard implemented and verified
+- TypeScript check passed
+- Production build passed
+- Production-mode happy path passed
+- OpenAI and Supabase fallbacks are implemented
+- Repository secret-pattern scan passed
+- npm audit reported 0 vulnerabilities
+
+## Remaining submission work
+
 - Deploy
-- Record video
-- Finalize screenshots/slides
+- Record demo video
+- Finalize pitch slides
+- Add live app, video, and slide links above
+- Submit Devpost entry
