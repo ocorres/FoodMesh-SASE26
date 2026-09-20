@@ -115,16 +115,13 @@ Completed and locally verified:
 - #4 Find Food experience
 - #5 Supabase persistence
 - #6 Organization/business workflow
-
-In progress:
-
 - #7 Accessibility audit
+- #8 Impact dashboard
+- #9 Demo hardening
 
 Remaining:
 
-- #8 Impact dashboard
-- #9 Demo hardening
-- #10 Devpost submission package
+- #10 Devpost submission package, deployment, video, and slides
 
 ## License
 
