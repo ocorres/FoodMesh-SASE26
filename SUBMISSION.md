@@ -89,7 +89,7 @@ FoodMesh helps communities move usable food faster, with less friction and more 
 ## Submission links
 
 - GitHub: https://github.com/ocorres/FoodMesh-SASE26
-- Live app: TODO
+- Live app: https://food-mesh-sase-26.vercel.app
 - Demo video: TODO
 - Pitch slides: TODO
 
