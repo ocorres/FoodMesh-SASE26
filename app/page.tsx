@@ -21,6 +21,13 @@ const actions = [
     title: "Organizations",
     text: "Receive, coordinate, or contribute larger food donations.",
     cta: "Organization tools"
+  },
+  {
+    href: "/impact",
+    eyebrow: "For the community",
+    title: "Impact",
+    text: "See aggregate food recovery, accepted matches, and estimated community value.",
+    cta: "View impact"
   }
 ];
 
