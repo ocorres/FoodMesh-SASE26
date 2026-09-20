@@ -21,6 +21,7 @@ function fallbackParse(
   labelDate: string,
   labelDateType: DateLabelType
 ): DonationIntake {
+  const descriptionText = description.toLowerCase();
   const text = `${description} ${deadline}`.toLowerCase();
 
   let category: FoodCategory = "other";
@@ -33,7 +34,16 @@ function fallbackParse(
   else if (/drink|juice|water|beverage/.test(text)) category = "beverage";
   else if (/mixed|assorted|variety/.test(text)) category = "mixed";
 
-  const quantityMatch = text.match(/\b(\d{1,4})\b/);
+  const quantityPatterns = [
+    /\b(\d{1,4})\s+(?:servings?|meals?|boxes?|sandwiches?|cans?|items?|portions?|trays?|bags?|loaves?|bottles?)\b/,
+    /\b(?:about|around|approximately|roughly)\s+(\d{1,4})\b/,
+    /\b(\d{1,4})\b/
+  ];
+
+  const quantityMatch = quantityPatterns
+    .map((pattern) => descriptionText.match(pattern))
+    .find(Boolean);
+
   const quantity = quantityMatch ? Number(quantityMatch[1]) : null;
 
   const urgency =
