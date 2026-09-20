@@ -114,7 +114,7 @@ h2 { line-height: 1.15; }
 
 .action-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1rem;
   margin: 3rem 0;
 }
@@ -626,5 +626,81 @@ select {
 
   .shell {
     width: min(1120px, calc(100% - 1rem));
+  }
+}
+
+
+.impact-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.impact-metrics article,
+.impact-panel {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.impact-metrics article {
+  display: grid;
+  gap: .45rem;
+}
+
+.impact-number {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1;
+  font-weight: 900;
+  color: var(--primary-dark);
+}
+
+.impact-metrics p,
+.impact-panel p {
+  color: var(--muted);
+}
+
+.impact-panel {
+  margin-top: 1rem;
+}
+
+.recognition-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  margin-top: 1rem;
+}
+
+.recognition-toggle input {
+  width: auto;
+  margin-top: .25rem;
+}
+
+.impact-route-list {
+  display: grid;
+  gap: .75rem;
+}
+
+.impact-route-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.impact-route-card h3,
+.impact-route-card p {
+  margin: .1rem 0;
+}
+
+@media (max-width: 650px) {
+  .impact-route-card {
+    display: grid;
   }
 }
