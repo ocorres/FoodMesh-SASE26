@@ -2,19 +2,23 @@
 
 ## One-line description
 
-FoodMesh is a hyperlocal food-recovery network that uses AI-assisted intake and deterministic routing to move surplus food from households and businesses to nearby community organizations before it becomes waste.
+FoodMesh is a hyperlocal food-sharing network that uses AI-assisted intake and explainable rules to help households, businesses, and community organizations coordinate nearby surplus food before it becomes waste.
 
 ## Short project description
 
-FoodMesh addresses a simple coordination failure: usable food often exists near people who need it, but donors and community organizations lack a fast, accessible way to connect in real time.
+FoodMesh addresses a local coordination failure: usable food can exist near people who could use it, while donors, community organizations, and neighbors still lack a simple way to see what is available and coordinate around it.
 
-A donor describes surplus food in plain language. OpenAI structures the intake, while deterministic routing logic evaluates category compatibility, quantity, recipient capacity, urgency, distance, storage requirements, dietary-routing metadata, and accessibility. FoodMesh then recommends a recipient and explains why it was selected.
+A donor describes surplus food in plain language. OpenAI structures the intake, while deterministic routing logic evaluates category compatibility, quantity, recipient capacity, urgency, distance, storage requirements, dietary-routing metadata, and accessibility. FoodMesh then recommends an eligible community organization and explains why it was selected.
 
 If an organization declines, the donation can be rerouted to the next eligible match. Supabase persists donation state, routing history, and impact data. A separate Find Food experience lets people browse nearby food availability without requiring an account and includes text-based accessibility information and printable schedules.
 
+FoodMesh is a coordination layer, not a delivery service. The current MVP routes donations through community organizations; the broader concept is designed to extend to trusted neighbor-to-neighbor pickup as the network grows.
+
 ## Why AI is useful here
 
-The AI component is deliberately narrow: it converts messy real-world descriptions into structured donation data. The routing decision itself is deterministic and explainable so that hard constraints are not left to a language model.
+The AI component is deliberately narrow: it converts messy real-world descriptions into structured donation data. The routing decision itself is deterministic and explainable so hard constraints are not left to a language model.
+
+**AI interprets. Rules decide.**
 
 Planned AI extensions include multilingual/plain-language assistance, demand forecasting, and impact storytelling.
 
@@ -58,7 +62,7 @@ FoodMesh is designed so critical information is not map-only, image-only, or aud
 
 **0:00-0:20 — Problem**
 
-Usable food is wasted while nearby community organizations are trying to serve people with limited visibility into what is available. Existing coordination is often fragmented and manual.
+Usable food can exist in the same neighborhood as need and local capacity, yet still miss the people and organizations that could use it because coordination is fragmented.
 
 **0:20-1:10 — Product demo**
 
@@ -74,24 +78,27 @@ Explain that AI interprets the donor's words, deterministic software enforces ro
 
 **1:55-2:00 — Close**
 
-FoodMesh helps communities move usable food faster, with less friction and more dignity.
+FoodMesh helps communities see what they already have and makes local food sharing easier to coordinate.
 
-## Pitch deck outline
+## Pitch deck themes
 
-1. Problem — surplus food and fragmented local coordination
-2. Who is affected — donors, community organizations, and people seeking food
-3. FoodMesh — hyperlocal recovery and routing
-4. How it works — AI intake + deterministic matching + Supabase
-5. Live/demo result — rerouting and acceptance
-6. Accessibility + impact
-7. Closing — food shared with dignity
+1. The village — communities already have resources
+2. Where one eats, two can eat — the culture of sharing
+3. The connection is missing — surplus, people, and local capacity can still miss each other
+4. FoodMesh — Describe → Match → Connect
+5. Why AI — practical interpretation of messy real-world input
+6. Market + competition — positioned between consumer sharing and institutional rescue
+7. Working product — explainable matching and organization workflow
+8. Access — nearby food browsing and community coordination
+9. Growth — community-by-community expansion
+10. Rebuilding the village — technology helps reveal and reconnect local capacity
 
 ## Submission links
 
 - GitHub: https://github.com/ocorres/FoodMesh-SASE26
 - Live app: https://food-mesh-sase-26.vercel.app
-- Demo video: TODO
-- Pitch slides: TODO
+- Demo video: TODO — add final public recording link
+- Pitch slides: TODO — add final public slide link
 
 ## Verified before submission
 
@@ -100,14 +107,15 @@ FoodMesh helps communities move usable food faster, with less friction and more 
 - TypeScript check passed
 - Production build passed
 - Production-mode happy path passed
+- Live Vercel deployment confirmed
 - OpenAI and Supabase fallbacks are implemented
 - Repository secret-pattern scan passed
 - npm audit reported 0 vulnerabilities
+- Final pitch slides completed
+- Final pitch/demo recording completed
 
 ## Remaining submission work
 
-- Deploy
-- Record demo video
-- Finalize pitch slides
-- Add live app, video, and slide links above
-- Submit Devpost entry
+- Add the final public video link
+- Add the final public slide link if the submission form requires one
+- Complete and submit the Devpost entry
