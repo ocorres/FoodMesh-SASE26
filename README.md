@@ -1,6 +1,6 @@
 # FoodMesh
 
-FoodMesh is a hyperlocal food-resilience web app that helps route surplus food from households and businesses to nearby people and community organizations before it becomes waste.
+FoodMesh is a hyperlocal food-sharing and food-resilience web app that helps households and businesses make surplus food visible, matches donations to nearby community organizations, and lets people browse nearby food availability before usable food becomes waste.
 
 ## What the MVP does
 
@@ -11,6 +11,10 @@ FoodMesh is a hyperlocal food-resilience web app that helps route surplus food f
 - **Persistence:** donation and routing state are stored in Supabase
 - **Accessibility:** keyboard-friendly controls, visible focus states, screen-reader-oriented semantics, text-first location information, printable schedules, and responsive reflow
 - **Package-Date Capture:** preserves whether a label says best by, use by, sell by, expiration, or prepared on
+
+## Product direction
+
+FoodMesh is designed as a local coordination layer, not a delivery service. The current hackathon MVP routes donations through community organizations and lets people browse nearby food resources. The broader concept can extend to trusted neighbor-to-neighbor pickup while keeping coordination local.
 
 ## Architecture
 
@@ -31,7 +35,9 @@ flowchart LR
 
 ### Design boundary
 
-AI interprets messy human input. Deterministic software handles routing constraints and scoring. FoodMesh does not delegate food-safety guarantees to the language model.
+**AI interprets. Rules decide.**
+
+AI converts messy human input into structured donation data. Deterministic software handles routing constraints and scoring. FoodMesh does not delegate food-safety guarantees or final routing logic to the language model.
 
 ## Technology
 
@@ -118,10 +124,13 @@ Completed and locally verified:
 - #7 Accessibility audit
 - #8 Impact dashboard
 - #9 Demo hardening
+- Live Vercel deployment
+- Final pitch slides
+- Final pitch/demo recording
 
 Remaining:
 
-- #10 Devpost submission package, deployment, video, and slides
+- #10 Add final public video/slide links and submit the Devpost entry
 
 ## License
 
