@@ -98,7 +98,7 @@ FoodMesh helps communities see what they already have and makes local food shari
 - GitHub: https://github.com/ocorres/FoodMesh-SASE26
 - Live app: https://food-mesh-sase-26.vercel.app
 - Demo video: https://youtu.be/0fb1uU2AFtc
-- Pitch slides: TODO — add final public slide link if required
+- Pitch slides: https://docs.google.com/presentation/d/1FBOJ36uKTtbNmf9vmftGsIwyeyV6BDZI/edit?usp=sharing&ouid=101205909704133248698&rtpof=true&sd=true
 
 ## Verified before submission
 
@@ -116,5 +116,4 @@ FoodMesh helps communities see what they already have and makes local food shari
 
 ## Remaining submission work
 
-- Add the final public slide link if the submission form requires one
 - Complete and submit the Devpost entry
